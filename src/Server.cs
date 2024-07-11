@@ -18,7 +18,7 @@ var line0Parts = lines[0].Split(" ");
 var (path, httpVer) = (line0Parts[1], line0Parts[2]);
 
 var response = path == "/" ? 
-    $"{httpVer} 200 Ok\r\n\r\n" : 
+    $"{httpVer} 200 OK\r\n\r\n" : 
     $"{httpVer} 404 Not Found\r\n\r\n";
 
 socket.Send(Encoding.UTF8.GetBytes(response));
