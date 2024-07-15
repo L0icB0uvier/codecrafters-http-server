@@ -21,7 +21,7 @@ string response;
 if (path.StartsWith("/echo/"))
 {
     var bodyContent = path.Remove(0, 5);
-    response = $"{httpVer} 200 OK\r\n\r\nContent-Type: text/plain\r\nContentLength: {bodyContent.Length}\r\n\r\n{bodyContent}"; 
+    response = $"{httpVer} 200 OK\r\nContent-Type: text/plain\r\nContentLength: {bodyContent.Length}\r\n\r\n{bodyContent}"; 
 }
 
 else if(path.StartsWith('/'))
