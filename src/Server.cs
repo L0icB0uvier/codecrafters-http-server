@@ -24,7 +24,7 @@ if (path.StartsWith("/echo/"))
     response = $"{httpVer} 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {bodyContent.Length}\r\n\r\n{bodyContent}"; 
 }
 
-else if(path.StartsWith('/'))
+else if(path.EndsWith('/'))
 {
     response = $"{httpVer} 200 OK\r\n\r\n";
 }
