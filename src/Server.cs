@@ -20,7 +20,7 @@ var (path, httpVer) = (line0Parts[1], line0Parts[2]);
 string response;
 if (path.StartsWith("/echo/"))
 {
-    var bodyContent = path.Remove(0, 5);
+    var bodyContent = path.Remove(0, 6);
     response = $"{httpVer} 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {bodyContent.Length}\r\n\r\n{bodyContent}"; 
 }
 
