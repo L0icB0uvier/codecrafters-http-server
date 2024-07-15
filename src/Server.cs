@@ -17,8 +17,22 @@ var lines = Encoding.UTF8.GetString(responseBuffer).Split("\r\n");
 var line0Parts = lines[0].Split(" ");
 var (path, httpVer) = (line0Parts[1], line0Parts[2]);
 
-var response = path == "/" ? 
-    $"{httpVer} 200 OK\r\n\r\n" : 
-    $"{httpVer} 404 Not Found\r\n\r\n";
+string response;
+if (path.StartsWith("/echo/"))
+{
+    var bodyContent = path.Remove(0, 5);
+    response = $"{httpVer} 200 OK\r\n\r\nContent-Type: text/plain\r\nContentLength: {bodyContent.Length}\r\n\r\n{bodyContent}"; 
+}
+
+else if(path.StartsWith('/'))
+{
+    response = $"{httpVer} 200 OK\r\n\r\n";
+}
+
+else
+{
+    response = $"{httpVer} 404 Not Found\r\n\r\n";
+
+}
 
 socket.Send(Encoding.UTF8.GetBytes(response));
