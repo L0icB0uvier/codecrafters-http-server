@@ -14,14 +14,18 @@ socket.Receive(responseBuffer);
 
 var lines = Encoding.UTF8.GetString(responseBuffer).Split("\r\n");
 
+foreach(var line in lines)
+{
+    Console.WriteLine(line);
+}
+
 var line0Parts = lines[0].Split(" ");
 var (path, httpVer) = (line0Parts[1], line0Parts[2]);
-
 
 string response;
 
 if(path.StartsWith("/user-agent")){
-    var userAgent = lines[3].Split(": ")[1];
+    var userAgent = lines[2].Split(": ")[1];
     response = $"{httpVer} 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {userAgent.Length}\r\n\r\n{userAgent}"; 
 }
 
