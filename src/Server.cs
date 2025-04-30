@@ -14,11 +14,27 @@ socket.Receive(responseBuffer);
 
 var lines = Encoding.UTF8.GetString(responseBuffer).Split("\r\n");
 
+foreach (var line in lines)
+{
+    Console.WriteLine($"Request: {line}");
+}
+
 var line0Parts = lines[0].Split(" ");
 var (path, httpVer) = (line0Parts[1], line0Parts[2]);
 
+Console.WriteLine($"Path: {path}");
+Console.WriteLine($"Http Version: {httpVer}");
+
 string response;
-if (path.StartsWith("/echo/"))
+
+if(path.StartsWith("/user-agent")){
+    Console.WriteLine("Requested User Agent");
+    Console.ReadLine();
+    var userAgent = lines[3].Split(": ")[1];
+    response = $"{httpVer} 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {userAgent.Length}\r\n\r\n{userAgent}"; 
+}
+
+else if (path.StartsWith("/echo/"))
 {
     var bodyContent = path.Remove(0, 6);
     response = $"{httpVer} 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {bodyContent.Length}\r\n\r\n{bodyContent}"; 
@@ -32,7 +48,8 @@ else if(path.EndsWith('/'))
 else
 {
     response = $"{httpVer} 404 Not Found\r\n\r\n";
-
 }
 
 socket.Send(Encoding.UTF8.GetBytes(response));
+Console.WriteLine($"Response sent: {response}");
+Console.ReadLine();
