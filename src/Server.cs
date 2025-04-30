@@ -14,22 +14,13 @@ socket.Receive(responseBuffer);
 
 var lines = Encoding.UTF8.GetString(responseBuffer).Split("\r\n");
 
-foreach (var line in lines)
-{
-    Console.WriteLine($"Request: {line}");
-}
-
 var line0Parts = lines[0].Split(" ");
 var (path, httpVer) = (line0Parts[1], line0Parts[2]);
 
-Console.WriteLine($"Path: {path}");
-Console.WriteLine($"Http Version: {httpVer}");
 
 string response;
 
 if(path.StartsWith("/user-agent")){
-    Console.WriteLine("Requested User Agent");
-    Console.ReadLine();
     var userAgent = lines[3].Split(": ")[1];
     response = $"{httpVer} 200 OK\r\nContent-Type: text/plain\r\nContent-Length: {userAgent.Length}\r\n\r\n{userAgent}"; 
 }
@@ -51,5 +42,4 @@ else
 }
 
 socket.Send(Encoding.UTF8.GetBytes(response));
-Console.WriteLine($"Response sent: {response}");
-Console.ReadLine();
+socket.Close();
