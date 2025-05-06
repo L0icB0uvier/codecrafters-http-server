@@ -32,9 +32,7 @@ public class HttpResponse
     public HttpResponse(int statusCode = 200)
     {
         StatusCode = statusCode;
-        StatusMessage = CommonStatusMessages.TryGetValue(statusCode, out var message)
-            ? message
-            : "Unknown";
+        StatusMessage = CommonStatusMessages.GetValueOrDefault(statusCode, "Unknown");
     }
 
     public byte[] ToByteArray()
