@@ -81,9 +81,8 @@ public class HttpResponse
             Buffer.BlockCopy(bodyBytes, 0, responseBytes, headerBytes.Length, bodyBytes.Length);
             return responseBytes;
         }
-        else
-        {
-            return headerBytes;
-        }
+       
+        return headerBytes;
+        
     }
 }
