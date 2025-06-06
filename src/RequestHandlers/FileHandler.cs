@@ -9,7 +9,20 @@ public class FileHandler(string directory) : IRequestHandler
             string.Empty;
 
         var filePath = Path.Combine(directory + fileName);
-       
+
+        switch (request.Method)
+        {
+            case "GET":
+                return HandleGetRequest(filePath);
+            case "POST":
+                return HandlePostRequest(filePath, request.Body);
+            default:
+                return new HttpResponse(404);
+        }
+    }
+
+    private static HttpResponse HandleGetRequest(string filePath)
+    {
         if (!File.Exists(filePath))
             return new HttpResponse(404);
         
@@ -26,5 +39,11 @@ public class FileHandler(string directory) : IRequestHandler
             Headers = {["Content-Type"] = "application/octet-stream"},
             Body = contents
         };
+    }
+
+    private static HttpResponse HandlePostRequest(string filePath, string content)
+    {
+        File.WriteAllText(filePath, content);
+        return new HttpResponse(201);
     }
 }
