@@ -4,13 +4,12 @@ public class FileHandler(string directory) : IRequestHandler
 {
     public HttpResponse HandleRequest(HttpRequest request)
     {
-        
-        var fileName = request.Path.Contains("/file/")?
+        var fileName = request.Path.Contains("/files/")?
         request.Path.Substring(request.Path.IndexOf("/files/") + 7) :
             string.Empty;
 
         var filePath = Path.Combine(directory + fileName);
-
+       
         if (!File.Exists(filePath))
             return new HttpResponse(404);
         

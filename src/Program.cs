@@ -8,8 +8,8 @@ public class Program
     private static void Main(string[] args)
     {
         string directory = string.Empty;
-
-        if (args.Length > 2)
+        
+        if (args.Length > 1)
         {
             directory = args[1];
         }
